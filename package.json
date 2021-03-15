@@ -1,0 +1,23 @@
+{
+  "name": "fakeapi",
+  "version": "1.0.0",
+  "description": "fake api to post and get data",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "rest",
+    "fake",
+    "api"
+  ],
+  "author": "xscotophilic",
+  "license": "ISC"
+}
