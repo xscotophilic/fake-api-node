@@ -4,6 +4,7 @@
   "description": "fake api to post and get data",
   "main": "index.js",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "uuid": "^11.1.0"
   },
