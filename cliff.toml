@@ -1,0 +1,49 @@
+[changelog]
+header = """
+# 🚀 Changelog\n
+"""
+body = """
+{% if version %}\
+    ## {{ version | trim_start_matches(pat="v") }} - {{ timestamp | date(format="%Y-%m-%d") }}
+{% else %}\
+    ## Unreleased
+{% endif %}\
+{% if previous %}\
+    {% if previous.commit_id and commit_id %}
+        [{{ previous.commit_id | truncate(length=7, end="") }}]({{ previous.commit_id }})...\
+            [{{ commit_id | truncate(length=7, end="") }}]({{ commit_id }})
+    {% endif %}\
+{% endif %}\
+{% for group, commits in commits | group_by(attribute="group") %}
+    ### {{ group | upper_first }}
+    {% for commit in commits %}
+        - {{ commit.message | split(pat="\n") | first | upper_first | trim }} ([{{ commit.id | truncate(length=7, end="") }}]({{ commit.id }}))\
+          {% for footer in commit.footers -%}
+            , {{ footer.token }}{{ footer.separator }}{{ footer.value }}\
+          {% endfor %}\
+    {% endfor %}
+{% endfor %}\n
+"""
+trim = true
+
+[git]
+conventional_commits = true
+filter_unconventional = false
+commit_parsers = [
+    { message = "^feat", group = "Features ✨" },
+    { message = "^fix", group = "Bug Fixes 🛠" },
+    { message = "^doc", group = "Documentation 📖" },
+    { message = "^perf", group = "Performance ⚡" },
+    { message = "^refactor", group = "Refactor ♻️" },
+    { message = "^style", group = "Styling 🎨" },
+    { message = "^test", group = "Testing 🧪" },
+    { message = "^chore\\(deps.*\\)", skip = true },
+    { message = "^chore\\(pr\\)", skip = true },
+    { message = "^chore\\(pull\\)", skip = true },
+    { message = "^chore\\(release\\): prepare for", skip = true },
+    { message = "^chore|^ci", group = "Miscellaneous Tasks 🔧" },
+    { body = ".*security", group = "Security 🔒" },
+]
+filter_commits = false
+topo_order = false
+sort_commits = "oldest"
